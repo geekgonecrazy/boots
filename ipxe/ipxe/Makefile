@@ -4,19 +4,20 @@ h := 17b6bbad8f0a94b15cdb5470bb60c8c7868759efd89f0ea8111c94eefaaa4c0c665a5b8d954
 
 configs := colour.h console.h general.aarch64-snp-nolacp.h general.efi.h general.undionly.h
 
-all: undionly.kpxe ipxe.efi snp-nolacp.efi
+all: undionly.kpxe ipxe.efi snponly.efi snp-nolacp.efi
 
 ipxe.efi: ipxe-x86_64-efi/src/bin-x86_64-efi/ipxe.efi
 snp-nolacp.efi: ipxe-arm64-efi/src/bin-arm64-efi/snp.efi
+snponly.efi: ipxe-x86_64-efi/src/bin-x86_64-efi/snponly.efi
 undionly.kpxe: ipxe-x86_64-kpxe/src/bin/undionly.kpxe
-ipxe.efi snp-nolacp.efi undionly.kpxe:
+ipxe.efi snp-nolacp.efi snponly.efi undionly.kpxe:
 	cp $^ $@
 
 ipxe-arm64-efi/src/bin-arm64-efi/snp.efi: ipxe-arm64-efi
 ipxe-x86_64-efi/src/bin-x86_64-efi/ipxe.efi: ipxe-x86_64-efi
 ipxe-x86_64-kpxe/src/bin/undionly.kpxe: ipxe-x86_64-kpxe
 
-ipxe-arm64-efi/src/bin-arm64-efi/snp.efi ipxe-x86_64-efi/src/bin-x86_64-efi/ipxe.efi ipxe-x86_64-kpxe/src/bin/undionly.kpxe: build.sh ${configs}
+ipxe-arm64-efi/src/bin-arm64-efi/snp.efi ipxe-x86_64-efi/src/bin-x86_64-efi/ipxe.efi ipxe-x86_64-efi/src/bin-x86_64-efi/snponly.efi ipxe-x86_64-kpxe/src/bin/undionly.kpxe: build.sh ${configs}
 	cp ${configs} $(dir $(patsubst %/,%,$(dir $@)))/config/local
 	+./build.sh $@ $v
 

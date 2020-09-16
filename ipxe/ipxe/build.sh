@@ -19,6 +19,10 @@ ipxe.efi)
 	cp $topdir/src/config/local/general.efi.h $topdir/src/config/local/general.h
 	make -C $topdir/src VERSION_PATCH=255 EXTRAVERSION="+ ($short_version)" bin-x86_64-efi/ipxe.efi
 	;;
+snponly.efi)
+	cp $topdir/src/config/local/general.efi.h $topdir/src/config/local/general.h
+	make -C $topdir/src VERSION_PATCH=255 EXTRAVERSION="+ ($short_version)" bin-x86_64-efi/snponly.efi
+	;;
 snp.efi)
 	cp $topdir/src/config/local/general.aarch64-snp-nolacp.h $topdir/src/config/local/general.h
 	# http://lists.ipxe.org/pipermail/ipxe-devel/2018-August/006254.html
